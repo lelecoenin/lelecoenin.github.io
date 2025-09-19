@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My love💌</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ffe6f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding-top: 30px;
+    }
+    h1 {
+    color: #d6336c;
+    margin-bottom: 5px;
+    font-size: 32px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+    .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    }
+    .envelope {
+      background: #fff;
+      width: 300px;
+      height: 220px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .envelope.open {
+      transform: rotateY(180deg);
+    }
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+    }
+    .front {
+      background: #ffb3c6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+    .back {
+      background: #fff;
+      transform: rotateY(180deg);
+      padding: 5px 20px 10px 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .back img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .back p {
+      font-size: 18px;
+      color: #333;
+      margin-top: 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Para meu amor 💌</h1>
+    <div class="envelope" id="envelope">
+      <div class="front">Clique para abrir 💌</div>
+      <div class="back">
+        <img src="foto.jpeg" alt="Nossa foto" />
+        <p>Espero que goste meu branquinho 💖<br>
+            <br><br>
+        Meu fofinho! obrigada por tudo que você fez e faz por mim, eu sou muito feliz em ter você na minha vida. Não sei oque seria de mim sem você. Lembre-se sempre que Eu Te Amo Muito😍 e nunca vou parar de amar. Pare de se achar insuficiente para mim, você é perfeito meu gostosinho. Amo todos os momentos que passo contigo, não pare de amar pliss kkk. Estarei sempre aqui para você. Obrigada obrigada😘🥰✨</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const envelope = document.getElementById('envelope');
+    envelope.addEventListener('click', () => {
+      envelope.classList.toggle('open');
+    });
+  </script>
+</body>
