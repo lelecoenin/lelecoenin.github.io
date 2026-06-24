@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thayamy — Técnica em Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-elevated: #11161d;
+    --bg-tab: #0a0d12;
+    --border: #21262d;
+    --text: #c9d1d9;
+    --text-dim: #6e7681;
+    --text-bright: #f0f3f6;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-amber: #e3b341;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::selection { background: var(--accent-blue); color: var(--bg); }
+
+  /* ===== Top bar (browser/editor chrome) ===== */
+  .topbar {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-tab);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 24px;
+  }
+
+  .dots { display: flex; gap: 8px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot:nth-child(1) { background: #ff5f56; }
+  .dot:nth-child(2) { background: #ffbd2e; }
+  .dot:nth-child(3) { background: #27c93f; }
+
+  .topbar-path {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .topbar-nav {
+    margin-left: auto;
+    display: flex;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .topbar-nav a {
+    color: var(--text-dim);
+    transition: color 0.2s;
+    padding: 4px 0;
+  }
+  .topbar-nav a:hover { color: var(--accent-blue); }
+
+  @media (max-width: 640px) {
+    .topbar-nav { display: none; }
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 120px 24px 100px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-green);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before {
+    content: '●';
+    font-size: 9px;
+  }
+
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 .fn { color: var(--accent-blue); }
+  .hero h1 .str { color: var(--accent-amber); }
+  .hero h1 .punct { color: var(--text-dim); }
+
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    background: var(--accent-blue);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero p.lede {
+    margin-top: 28px;
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+  }
+
+  .hero-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 11px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--accent-blue);
+    color: #0d1117;
+    border-color: var(--accent-blue);
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: #79b8ff; }
+
+  .btn-ghost { color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+  /* ===== Section shared ===== */
+  section { max-width: 880px; margin: 0 auto; padding: 80px 24px; }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-blue);
+    margin-bottom: 12px;
+  }
+
+  .section-tag::before { content: '// '; color: var(--text-dim); }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 26px;
+    color: var(--text-bright);
+    font-weight: 600;
+    margin-bottom: 48px;
+  }
+
+  /* ===== Projects as file tabs ===== */
+  .file-tabs {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+    overflow-x: auto;
+  }
+
+  .file-tab {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 10px 18px;
+    background: var(--bg-tab);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .file-tab.active {
+    background: var(--bg-elevated);
+    color: var(--text-bright);
+    border-bottom: 2px solid var(--accent-blue);
+    margin-bottom: -1px;
+  }
+
+  .file-tab:hover:not(.active) { color: var(--text); }
+
+  .project-panel {
+    display: none;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 40px;
+  }
+
+  .project-panel.active { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; }
+
+  @media (max-width: 720px) {
+    .project-panel.active { grid-template-columns: 1fr; }
+    .project-panel { padding: 28px; }
+  }
+
+  .project-info .status {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-green);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+
+  .project-info h3 {
+    font-size: 24px;
+    color: var(--text-bright);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .project-info p { color: var(--text-dim); margin-bottom: 20px; }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .stack span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-amber);
+    background: rgba(227, 179, 65, 0.1);
+    border: 1px solid rgba(227, 179, 65, 0.25);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .project-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .project-links a {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .project-links a:first-child {
+    background: var(--accent-blue);
+    color: #0d1117;
+    border-color: var(--accent-blue);
+  }
+  .project-links a:first-child:hover { background: #79b8ff; }
+  .project-links a:last-child { color: var(--text); }
+  .project-links a:last-child:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+  .project-source-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 16px;
+    word-break: break-all;
+  }
+  .project-source-link a { color: var(--accent-blue); border-bottom: 1px solid transparent; }
+  .project-source-link a:hover { border-bottom-color: var(--accent-blue); }
+
+  .project-preview {
+    background: var(--bg-tab);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    overflow-x: auto;
+  }
+
+  .project-preview .ln { color: var(--text-dim); opacity: 0.4; margin-right: 16px; user-select: none; }
+  .kw { color: #ff7b72; }
+  .fn2 { color: var(--accent-blue); }
+  .str2 { color: var(--accent-amber); }
+  .com { color: #6e7681; }
+
+  /* ===== Skills ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .skill-cell {
+    background: var(--bg-elevated);
+    padding: 24px 20px;
+  }
+
+  .skill-cell .cat {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .skill-cell .items { font-size: 14px; color: var(--text); line-height: 1.8; }
+
+  /* ===== Contact / footer ===== */
+  .contact { text-align: left; }
+
+  .contact-block {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 48px;
+  }
+
+  @media (max-width: 640px) { .contact-block { padding: 32px 24px; } }
+
+  .contact-block p.prompt {
+    font-family: var(--mono);
+    color: var(--accent-green);
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .contact-block h2 {
+    font-family: var(--mono);
+    font-size: 28px;
+    color: var(--text-bright);
+    margin-bottom: 28px;
+    max-width: 480px;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 60px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, .file-tab:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <div class="topbar-path">~/portfolio/thayamy</div>
+  <nav class="topbar-nav">
+    <a href="#projetos">projetos</a>
+    <a href="#skills">skills</a>
+    <a href="#contato">contato</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <p class="hero-eyebrow">disponível para novas oportunidades</p>
+  <h1><span class="fn">const</span> dev <span class="punct">=</span> <span class="punct">{</span><br>
+    &nbsp;&nbsp;nome: <span class="str">"Thayamy"</span>,<br>
+    &nbsp;&nbsp;cargo: <span class="str">"Técnica em Informática | Dev Front-end Júnior"</span><span class="cursor"></span><br>
+  <span class="punct">}</span></h1>
+  <p class="lede">Trabalho com tecnologia de várias formas: desenvolvimento web, suporte técnico, design e criação de conteúdo. Aqui estão alguns dos projetos que mostram como eu penso e resolvo problemas — não só o que eu sei, mas como eu uso.</p>
+  <div class="hero-actions">
+    <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+    <a href="https://github.com/lelecoenin" class="btn btn-ghost">GitHub →</a>
+    <a href="#contato" class="btn btn-ghost">Contato</a>
+  </div>
+</header>
+
+<section id="projetos">
+  <p class="section-tag">projetos</p>
+  <h2 class="section-title">Três coisas que eu construí</h2>
+
+  <div class="file-tabs" role="tablist">
+    <button class="file-tab active" data-tab="1" role="tab">dona-nena.html</button>
+    <button class="file-tab" data-tab="2" role="tab">financas-facil.js</button>
+    <button class="file-tab" data-tab="3" role="tab">osdm.html</button>
+  </div>
+
+  <div class="project-panel active" data-panel="1">
+    <div class="project-info">
+      <p class="status">● concluído</p>
+      <h3>Dona Nena Restaurante</h3>
+      <p>Site para restaurante de bairro com cardápio diário rotativo (segunda a sexta, cada dia com pratos diferentes), carrinho de pedidos flutuante com escolha entre retirada ou entrega, e botão que monta automaticamente a mensagem do pedido e abre direto no WhatsApp — sem o cliente precisar digitar nada.</p>
+      <div class="stack">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+      </div>
+      <div class="project-links">
+        <a href="https://lelecoenin.github.io/restaurantevenda/">Ver projeto →</a>
+        <a href="https://github.com/lelecoenin/restaurantevenda">Código fonte →</a>
+      </div>
+      <p class="project-source-link">🔗 <a href="https://lelecoenin.github.io/restaurantevenda/">lelecoenin.github.io/restaurantevenda</a></p>
+    </div>
+    <div class="project-preview">
+      <div><span class="ln">1</span><span class="kw">function</span> <span class="fn2">enviarPedido</span>(itens, tipo) {</div>
+      <div><span class="ln">2</span>&nbsp;&nbsp;<span class="com">// monta texto do carrinho + retirada/entrega</span></div>
+      <div><span class="ln">3</span>&nbsp;&nbsp;<span class="kw">window</span>.open(<span class="str2">"wa.me/..."</span>);</div>
+      <div><span class="ln">4</span>}</div>
+    </div>
+  </div>
+
+  <div class="project-panel" data-panel="2">
+    <div class="project-info">
+      <p class="status">● concluído</p>
+      <h3>Finanças Fácil</h3>
+      <p>Sistema completo de controle financeiro pessoal: dashboard com saldo, receitas e despesas do mês, histórico filtrável por categoria (alimentação, transporte, lazer e mais), gráficos de pizza e barras com Chart.js, metas de economia com progresso visual e uma calculadora de juros compostos para simular investimentos. Tudo salvo automaticamente no navegador.</p>
+      <div class="stack">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Chart.js</span>
+      </div>
+      <div class="project-links">
+        <a href="https://lelecoenin.github.io/financas-facil/">Ver projeto →</a>
+        <a href="https://github.com/lelecoenin/financas-facil">Código fonte →</a>
+      </div>
+      <p class="project-source-link">🔗 <a href="https://lelecoenin.github.io/financas-facil/">lelecoenin.github.io/financas-facil</a></p>
+    </div>
+    <div class="project-preview">
+      <div><span class="ln">1</span><span class="kw">function</span> <span class="fn2">calcularJurosCompostos</span>(capital, aporte, taxa, meses) {</div>
+      <div><span class="ln">2</span>&nbsp;&nbsp;<span class="com">// simula o crescimento mês a mês</span></div>
+      <div><span class="ln">3</span>&nbsp;&nbsp;<span class="kw">return</span> { montante, investido, rendimento };</div>
+      <div><span class="ln">4</span>}</div>
+    </div>
+  </div>
+
+  <div class="project-panel" data-panel="3">
+    <div class="project-info">
+      <p class="status">● tcc</p>
+      <h3>OSDM — Apoio à Mulher</h3>
+      <p>Trabalho de conclusão de curso: plataforma multi-página de apoio a mulheres em situação de violência, com mapa de ONGs, fórum de acolhimento, chat de atendimento e explicação da Lei Maria da Penha. Parte do conteúdo foi construído a partir de uma pesquisa própria com 39 respostas sobre o tema, e o projeto incluiu também um protótipo de aplicativo móvel.</p>
+      <div class="stack">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Disqus</span>
+      </div>
+      <div class="project-links">
+        <a href="https://lelecoenin.github.io/projetoosdm/">Ver projeto →</a>
+        <a href="https://github.com/lelecoenin/projetoosdm">Código fonte →</a>
+      </div>
+      <p class="project-source-link">🔗 <a href="https://lelecoenin.github.io/projetoosdm/">lelecoenin.github.io/projetoosdm</a></p>
+    </div>
+    <div class="project-preview">
+      <div><span class="ln">1</span><span class="kw">const</span> paginas <span class="kw">=</span> [</div>
+      <div><span class="ln">2</span>&nbsp;&nbsp;<span class="str2">"apoio"</span>, <span class="str2">"lei"</span>, <span class="str2">"mapa"</span>, <span class="str2">"forum"</span>, <span class="str2">"chat"</span></div>
+      <div><span class="ln">3</span>];</div>
+      <div><span class="ln">4</span><span class="com">// pesquisa própria com 39 respostas</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <p class="section-tag">stack</p>
+  <h2 class="section-title">Com o que eu trabalho</h2>
+  <p style="color: var(--text-dim); margin-bottom: 32px; max-width: 600px; font-size: 15px;">Sou Técnica em Informática — meu trabalho não é só código. Vai do desenvolvimento web ao suporte técnico, passando por IA, design e criação de conteúdo.</p>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <p class="cat">Desenvolvimento</p>
+      <p class="items">HTML5 / CSS3<br>JavaScript<br>Python<br>SQL</p>
+    </div>
+    <div class="skill-cell">
+      <p class="cat">Bibliotecas & ferramentas</p>
+      <p class="items">Chart.js<br>Git / GitHub<br>GitHub Pages</p>
+    </div>
+    <div class="skill-cell">
+      <p class="cat">Suporte & infraestrutura</p>
+      <p class="items">Suporte técnico<br>Hardware<br>Redes básicas</p>
+    </div>
+    <div class="skill-cell">
+      <p class="cat">IA</p>
+      <p class="items">Ferramentas de IA generativa<br>Prompt engineering aplicado</p>
+    </div>
+    <div class="skill-cell">
+      <p class="cat">Design & conteúdo</p>
+      <p class="items">Design para redes sociais<br>Identidade visual<br>Criação de posts</p>
+    </div>
+    <div class="skill-cell">
+      <p class="cat">Divulgação</p>
+      <p class="items">Gestão de Instagram<br>Estratégia de conteúdo</p>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="contact">
+    <div class="contact-block">
+      <p class="prompt">$ contato --enviar</p>
+      <h2>Vamos conversar sobre uma oportunidade?</h2>
+      <div class="contact-links">
+        <a href="mailto:thayamysilvaa@gmail.com" class="btn btn-primary">Enviar e-mail</a>
+        <a href="https://www.linkedin.com/in/thayamy-silva-289841407" class="btn btn-ghost">LinkedIn →</a>
+        <a href="https://github.com/lelecoenin" class="btn btn-ghost">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>feito por Thayamy · 2026</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.file-tab');
+  const panels = document.querySelectorAll('.project-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.project-panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
