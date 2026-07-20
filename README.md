@@ -16,6 +16,9 @@ Este portfólio foi construído com tema inspirado em editor de código, onde os
 - HTML5
 - CSS3
 - JavaScript
+-logotipos
+-modelagem 3d
+-capa para vídeos
 
 ## 📂 Projetos em destaque
 
