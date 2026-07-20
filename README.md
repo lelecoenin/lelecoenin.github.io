@@ -3,7 +3,7 @@
 
 Portfólio pessoal desenvolvido para apresentar minha trajetória como Técnica em Informática e Desenvolvedora Front-end Júnior.
 
-🔗 **Acesse:**  <!-- ajuste para a URL real do seu repositório -->
+🔗 **Acesse:** https://lelecoenin.github.io/ <!-- ajuste para a URL real do seu repositório -->
 
 ## Sobre
 
