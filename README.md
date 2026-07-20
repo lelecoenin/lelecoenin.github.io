@@ -1,9 +1,9 @@
-https://lelecoenin.github.io/
+
 # 💻 Portfólio — Thayamy
 
 Portfólio pessoal desenvolvido para apresentar minha trajetória como Técnica em Informática e Desenvolvedora Front-end Júnior.
 
-🔗 **Acesse:** https://lelecoenin.github.io/ <!-- ajuste para a URL real do seu repositório -->
+🔗 **Acesse:**  <!-- ajuste para a URL real do seu repositório -->
 
 ## Sobre
 
